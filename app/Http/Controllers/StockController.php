@@ -65,8 +65,11 @@ class StockController extends Controller
         "codartstk"
         "codcantstk"
         "codprecstk"
-        //comrpobante detalle
-        json_decode("tabladatos"); */
+        //comrpobante detalle*/
+        $datostabla = json_decode($request->input["tabladatos"]);
+        foreach($datostabla as $dt){
+          echo $dt;  
+        }; 
         //contabilidad
         /* */
     }
