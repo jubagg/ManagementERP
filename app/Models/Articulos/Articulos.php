@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\ArticulosTipoBarra;
 use App\ArticulosMultiCod;
+use App\StockDetalle;
+use App\Models\Stock\TiposMovimSt;
 
 class Articulos extends Model{
 
@@ -278,18 +280,21 @@ class Articulos extends Model{
             }
                 return $cli;
             }else{
-                return response()-json(['success' => 'Nada para hacer'], 200);
+                return response()->json(['success' => 'Nada para hacer'], 200);
             }
     }
 
     public static function getArticulo($id){
         try{
+            //miro si el articulo vino por el codigo dle articulo,
             $art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artcod', '=' , $id)->first();
+            //si el articulo no viene por el id del mismo busco por el codigo de barra uniico, si tiene algo retorno
             if($art == null){
                 $art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artcodbarun', '=' , $id)->first();
                 if($art != null){
                     return $art;
                 }
+            //si no localiza por codigo de barra, busco por el codigo mutlicod y lo retorno si existe algo
             }if($art == null){
                 $art = ArticulosMultiCod::join('mgart', 'mgart.artcod', '=' , 'mgartcodbar.codart')
                                                         ->join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')
@@ -299,15 +304,53 @@ class Articulos extends Model{
                 if($art != null){
                     return $art;
                 }
-            }/* if($art == null){
-                return (['error' => 'No se pudo encontrar el artículo.']);
-            } */
-
+                //si no lo busco por nombre y retorno un div con muestra
+            }if($art == null){
+                $art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artdesc', 'like' , '%'.$id .'%')->get();
+                if($art != null){
+                    return $art;
+                }
+            }
         }catch(\Exception $e){
             return redirect()->route('articulos.modificar',$id)->with([
                 'messageerror' => 'Error al recuperar el artículo: ' .$e->getMessage() .' Se anulo la transacción'
             ]);
         }
         return $art;
+    }
+
+    static public function controlNegativos($articulo, $tipoMovimiento,$cantidad,$fecha){
+        try{
+            $articulo = Articulos::find($articulo);
+            $validador = $articulo->artcontrolstk;
+            $resultado = null;
+            $saldofinal = null;
+            if($validador == 1){
+                $saldo = StockDetalle::detalleArtStock($articulo->artcod,$fecha);
+
+                if($saldo == null){
+                    $saldofinal = 0;
+                }else{
+                    $saldofinal = $saldo;
+                }
+                $tipoMovimiento = TiposMovimSt::getTipoMov($tipoMovimiento);
+                if($tipoMovimiento->movtipmov == 2){
+                    $resultado = $saldofinal - $cantidad;
+                }else{
+                    $resultado = $saldofinal + $cantidad;
+                }
+
+                if($resultado < 0){
+                    return response()->json(['error' => 'Error. El artículo tiene control negativo y lo esta sobrepasando.  Cantidad: ' . $resultado .' '.$saldo], 200);
+                }else{
+                    return response()->json(['success' => 'Nada para hacer'], 200);
+                }
+
+            }else{
+                return response()->json(['success' => 'Nada para hacer'], 200);
+            }
+        }catch(\Exception $e){
+            return response()->json(['error'=>'Error: ' . $e]);
+        }
     }
 }

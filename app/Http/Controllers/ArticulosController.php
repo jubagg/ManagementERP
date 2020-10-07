@@ -113,7 +113,7 @@ class ArticulosController extends Controller{
             $request->input('artinactive'),
             $request->input('artstkmed'),
             $request->input('artfrac'),
-            $request->input('artcontstk'),
+            $request->input('artnegativo'),
             $request->input('artlimminstk'),
             $request->input('artlimmaxstk'),
             $request->input('artnegativo')

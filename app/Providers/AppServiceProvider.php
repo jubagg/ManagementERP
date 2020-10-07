@@ -29,8 +29,5 @@ class AppServiceProvider extends ServiceProvider
             $view->with('menus', Mgmenu::menus());
         });
 
-        view()->composer('*', function($view){
-            $view->with('generales', Generales::paginas());
-        });
     }
 }

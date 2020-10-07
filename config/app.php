@@ -177,6 +177,7 @@ return [
         App\Providers\EmpresaServiceProvider::class,
         App\Providers\TiposComprobantesProvider::class,
         App\Providers\DepositosProvider::class,
+        App\Providers\FuncionesServiceProvider::class,
 
     ],
 
@@ -230,7 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Empresa' => App\Helpers\EmpresaHelper::class,
-        'Funciones' => App\Helpers\Funciones::class,
+        'Funciones' => App\Helpers\FuncionesHelper::class,
         'TiposC' => App\Helpers\TiposComprobantesHelper::class,
         'Depositos' => App\Helpers\DepositosHelper::class,
 

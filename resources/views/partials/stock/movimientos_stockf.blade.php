@@ -1,6 +1,7 @@
 <div class="tab-content" id="v-pills-tabContent">
     <div class="tab-pane fade show active" id="crear-movimiento" role="tabpanel" aria-labelledby="crear-movimiento-tab">
         <input type="hidden" class="form-control" name="codartstkroute" id="codartstkroute" value="{{route('stock.movimientos.articulos')}}">
+        <input type="hidden" class="form-control" name="codartnegativos" id="codartnegativos" value="{{route('stock.movimientos.negativos')}}">
         {{-- FORMULARIO --}}
         <form action="{{route('stock.movimientos.guardar')}}" method="post">
             @csrf
@@ -15,7 +16,7 @@
                                 <select class="form-control" name="tipmovstk" id="tipmovstk">
                                     <option>Seleccionar</option>
                                     @foreach($tiposmov as $tm)
-                                        <option value="{{$tm->movid}}">{{$tm->movid.' | '.$tm->movdesc}} </option>
+                                        <option value="{{$tm->movid}}" >{{$tm->movid.' | '.$tm->movdesc}} </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -55,8 +56,9 @@
                             </div>
                         </div>
                     </div>
-                    <div id="alert"></div>
+                    <div id="alert">
 
+                    </div>
                     <input type="hidden" class="form-control" name="tabladatos" id="tabladatos" value="">
                     <div>
                         <div id="example-table">
@@ -65,7 +67,24 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-row mt-3">
+                <div class="col text-right">
+                    <div class="col">
+                        <a class="btn btn-danger text-white" name="borrarFilaStk" onclick="borrarFilaStk()">
+                            <i class="fas fa-window-close fa-fw" aria-hidden="true"></i>
+                            <span class="d-none d-inline-block">Borrar fila</span>
+                        </a>
+                        <button class="btn btn-secondary" type="reset">
+                            <i class="fas fa-undo fa-fw" aria-hidden="true"></i>
+                            <span class="d-none d-inline-block">Deshacer</span>
+                        </button>
+                        <button class="btn btn-success" type="submit">
+                            <i class="fas fa-save fa-fw" aria-hidden="true"></i>
+                            <span class="d-none d-inline-block">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div class="tab-pane fade" id="movimientos-stock" role="tabpanel" aria-labelledby="movimientos-stock-tab">

@@ -14,4 +14,13 @@ class ArticulosTipoMedida extends Model
         $datos = ArticulosTipoMedida::All();
         return $datos;
     }
+
+    public static function getTipo($id){
+        try{
+            $tipoMedida = ArticulosTipoMedida::where('tmabr','=', $id)->first();
+            return $tipoMedida;
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
 }

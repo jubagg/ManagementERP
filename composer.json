@@ -43,7 +43,7 @@
         "files": [
             "app/Helpers/TiposComprobantesHelper.php",
             "app/Helpers/EmpresaHelper.php",
-            "app/Helpers/Funciones.php",
+            "app/Helpers/FuncionesHelper.php",
             "app/Helpers/DepositosHelper.php"
         ]
     },

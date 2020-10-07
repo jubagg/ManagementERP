@@ -13,4 +13,13 @@ class TiposComprobantesHelper{
         return $tiposComprobantes;
     }
 
+    public static function controlStock($tipoCom, $cantidad){
+        if($tipoCom == 1){
+            return $cantidad;
+        }elseif($tipoCom == 2){
+            $resultado = $cantidad * (-1);
+            return $resultado;
+        }
+    }
+
 }

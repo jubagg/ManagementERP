@@ -23,6 +23,6 @@ class FuncionesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        require_once app_path() . '/Helpers/Funciones.php';
+        require_once app_path() . '/Helpers/FuncionesHelper.php';
     }
 }

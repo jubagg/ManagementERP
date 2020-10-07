@@ -2,8 +2,8 @@
 <div class="form-row">
     <div class="col-3">
         <div class="form-group">
-            <label for="">Tipo comprobante</label>
-            <select class="form-control" name="" id="">
+            <label for="tipcom">Tipo comprobante</label>
+            <select class="form-control" name="tipcom" id="tipcom">
                 <option>Seleccionar</option>
                 @foreach(TiposC::getComprobantes() as $tc)
                     <option value="{{$tc->comid}}" {{$tc->comid == '091' ? 'selected' : ''}}>{{$tc->comid.' | '.$tc->comdesc}} </option>
