@@ -35,4 +35,10 @@ class FuncionesHelper{
         return $arrayproc;
     }
 
+        public static function sesionEstacion(){
+            $nombre_host = gethostname();
+            session(['estacion' => $nombre_host]);
+            $estacion = session('estacion');
+            return $estacion;
+        }
 }

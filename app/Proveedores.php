@@ -46,7 +46,7 @@ class Proveedores extends Model
             }
             return $cli;
             }else{
-            return response()-json(['success' => 'Nada para hacer'], 200);
+            return response()->json(['success' => 'Nada para hacer'], 200);
             }
         }
 }

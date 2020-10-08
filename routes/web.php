@@ -84,3 +84,7 @@ Route::post('/subfamilias/guardar', 'SubfamiliasController@crearSubfamilias')->n
 
 Route::get('/tablas' , 'TablasController@configuracionSistema')->name('tablas');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
