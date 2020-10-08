@@ -16,6 +16,7 @@ class CheckStacion
      */
     public function handle($request, Closure $next)
     {
+        $estacion = null;
         $estacion = \Funciones::sesionEstacion();
         $result = Estaciones::getEstacion($estacion);
         if(!empty($result)){

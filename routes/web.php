@@ -49,13 +49,13 @@ Route::get('/stock/movimientos' , 'StockController@crear')->name('stock.movimien
 Route::post('/stock/movimientos/articulo/{articulo?}' , 'StockController@busquedaArticulos')->name('stock.movimientos.articulos');
 Route::post('/stock/movimientos/articulo/{articulo?}/{tipomov?}/{cantidad?}/{fecha?}' , 'StockController@controlNegativosController')->name('stock.movimientos.negativos');
 Route::post('/stock/movimientos/guardar', 'StockController@guardarStock' )->name('stock.movimientos.guardar');
-Route::get('/stock/depositos' , )->name('stock.depositos');
+Route::get('/stock/depositos'  )->name('stock.depositos');
 
-Route::get('/comprobantes/facturas' , )->name('comprobantes.facturas');
-Route::get('/comprobantes/ncredito' , )->name('comprobantes.ncredito');
-Route::get('/comprobantes/ndebito' , )->name('comprobantes.ndebito');
-Route::get('/comprobantes/presupuesto' , )->name('comprobantes.presupuesto');
-Route::get('/comprobantes/remitos' , )->name('comprobantes.remitos');
+Route::get('/comprobantes/facturas'  )->name('comprobantes.facturas');
+Route::get('/comprobantes/ncredito'  )->name('comprobantes.ncredito');
+Route::get('/comprobantes/ndebito'  )->name('comprobantes.ndebito');
+Route::get('/comprobantes/presupuesto' )->name('comprobantes.presupuesto');
+Route::get('/comprobantes/remitos' )->name('comprobantes.remitos');
 
 //Ajax
 //Localidad

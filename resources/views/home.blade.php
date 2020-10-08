@@ -13,9 +13,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                        {{var_dump($sesion)}}
 
-                        {{var_dump($result)}}
+
+                        @php 
+                        $estacion = \Funciones::sesionEstacion();
+                        $sesion = session($estacion);
+                        @endphp                      
+                        {{$sesion}} 
                     {{ __('You are logged in!') }}
                 </div>
             </div>

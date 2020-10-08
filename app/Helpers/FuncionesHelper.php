@@ -36,9 +36,10 @@ class FuncionesHelper{
     }
 
         public static function sesionEstacion(){
-            $nombre_host = gethostname();
-            session(['estacion' => $nombre_host]);
-            $estacion = session('estacion');
+            $nombre_host = null;
+            $nombre_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            session([$nombre_host => $nombre_host]);
+            $estacion = session($nombre_host);
             return $estacion;
         }
 }
