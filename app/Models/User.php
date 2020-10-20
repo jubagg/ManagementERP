@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role', 'user'
     ];
 
     /**
@@ -36,4 +36,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    private $array = [];
+    protected $guarded = [];
+
+
+    public static function crear_modificar($array){
+        try{
+            $id = [ 'id' =>    $array['userid'] ];
+            $data = [
+            'id' =>    $array['userid'],
+            'user' =>    $array['user'],
+            'name' =>    $array['name'],
+            'role' =>    $array['role'],
+            'email' =>    $array['email'],
+            'password' =>    \Hash::make($array['password']),
+            ];
+
+            $user = User::updateOrCreate($id, $data);
+
+            return (['message' => 'Exito al grabar el movimiento.' . ' ' . $user['user']] );
+        }catch(\Exception $e){
+            return (['messageerror' => 'Error al grabar el nuevo movimiento. Consulte con un programador '.$e->getMessage()] );
+        }
+    }
 }

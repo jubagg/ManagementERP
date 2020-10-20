@@ -14,9 +14,10 @@ class TablasController extends Controller
         $icon = 'fas fa-table';
         $htitulo = 'Tablas del sistema';
         $hmintit = 'Modificación de parámetros';
+        $valortab = 'empresa';
 
 
-        return view('/configuracion/tablas')->with(compact('titulo','menu','slug','header','icon','htitulo','hmintit'));
+        return view('/configuracion/tablas')->with(compact('titulo','menu','slug','header','icon','htitulo','hmintit','valortab'));
 
     }
 }

@@ -178,6 +178,8 @@ return [
         App\Providers\TiposComprobantesProvider::class,
         App\Providers\DepositosProvider::class,
         App\Providers\FuncionesServiceProvider::class,
+        App\Providers\SucursalesProvider::class,
+        App\Providers\RolesProvider::class,
 
     ],
 
@@ -234,6 +236,8 @@ return [
         'Funciones' => App\Helpers\FuncionesHelper::class,
         'TiposC' => App\Helpers\TiposComprobantesHelper::class,
         'Depositos' => App\Helpers\DepositosHelper::class,
+        'Sucursales' => App\Helpers\SucursalHelper::class,
+        'Roles' => App\Helpers\RolesHelper::class,
 
     ],
 

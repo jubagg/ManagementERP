@@ -28,9 +28,9 @@ class Bancos extends Model
             $b->babr = $abr;
             $b->save();
 
-            return response()->json(['message'=>'Bancos actualizados.']);
+            return (['message'=>'Bancos actualizados.']);
         }catch(\Exception $e ){
-            return response()->json(['messageerror'=>'Error en la transacción.' .$e->getMessage()]);
+            return (['messageerror'=>'Error en la transacción.' .$e->getMessage()]);
         }
     }
 

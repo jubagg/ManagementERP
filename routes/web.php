@@ -82,8 +82,14 @@ Route::post('/familias/guardar', 'FamiliasController@crearFamilias')->name('fami
 Route::post('/subfamilias/listado/{id?}','SubfamiliasController@listadoSubfamilias')->name('subfamilias.listado');
 Route::post('/subfamilias/guardar', 'SubfamiliasController@crearSubfamilias')->name('subfamilias.crear');
 
-Route::get('/tablas' , 'TablasController@configuracionSistema')->name('tablas');
-
+//tablas del sistema
+Route::get('/tablas/' , 'TablasController@configuracionSistema')->name('tablas');
+Route::post('/tablas/empresas/guardar' , 'EmpresaController@guardarEmpresa')->name('tablas.empresas.guardar');
+Route::get('/tablas/empresas/eliminar/{empresa?}' , 'EmpresaController@eliminarEmpresa')->name('tablas.empresas.eliminar');
+Route::post('/tablas/sucursales/guardar' , 'SucursalesController@guardarSucursal')->name('tablas.sucursales.guardar');
+Route::get('/tablas/sucursales/eliminar/{sucursal?}' , 'SucursalesController@eliminarSucursal')->name('tablas.sucursales.eliminar');
+Route::post('/tablas/usuarios/guardar' , 'UsuariosController@guardarUsuario')->name('tablas.usuario.guardar');
+Route::get('/tablas/usuarios/eliminar/{usuario?}' , 'UsuariosController@eliminarUsuario')->name('tablas.usuario.eliminar');
 
 Auth::routes();
 

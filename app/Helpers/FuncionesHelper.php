@@ -42,4 +42,16 @@ class FuncionesHelper{
             $estacion = session($nombre_host);
             return $estacion;
         }
+
+        public static function validaciones($valid = [] ){
+            $messageerror = null;
+            $message = null;
+            if(isset($valid['messageerror'])){
+                $messageerror = $valid['messageerror'];
+                return (['messageerror' => $messageerror]);
+            }elseif(isset($valid['message'])){
+                $message = ($valid['message']);
+                return(['message' => $message]);
+            };
+        }
 }

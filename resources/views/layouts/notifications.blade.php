@@ -19,7 +19,7 @@
 @if(session('messageinfo'))
 
 <div class=" col-12 justify-content-center text-center d-inline-flex" id="message">
-    <div class="alert alert-info col-8">
+    <div class="alert alert-warning col-8">
         {{ session('messageinfo') }}
     </div>
 </div>

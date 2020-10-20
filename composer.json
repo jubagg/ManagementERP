@@ -45,7 +45,9 @@
             "app/Helpers/TiposComprobantesHelper.php",
             "app/Helpers/EmpresaHelper.php",
             "app/Helpers/FuncionesHelper.php",
-            "app/Helpers/DepositosHelper.php"
+            "app/Helpers/DepositosHelper.php",
+            "app/Helpers/SucursalHelper.php",
+            "app/Helpers/RolesHelper.php"
         ]
     },
     "autoload-dev": {

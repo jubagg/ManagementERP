@@ -7,7 +7,7 @@ $(document).ready(function() {
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             data: {
                 bancos: $('#bancos').val(),
-                abr: $('#babr').val(),
+                babr: $('#babr').val(),
             },
             success: function(result) {
                 $('#modalBanco').modal('hide');
@@ -18,7 +18,6 @@ $(document).ready(function() {
                     url: $('#bancoslistadom').val(),
                     dataType: 'json',
                     success: function(dataResult) {
-                        console.log(dataResult);
                         var $select = $('#cbbanco');
                         $('#cbbanco').empty();
                         //alert(options);
@@ -29,11 +28,16 @@ $(document).ready(function() {
                     }
                 });
                 alert("Exito al grabar el nuevo banco");
+                $divban = $('#divbancos');
+                $divbabr = $('#divbabr');
+                $($divban).children('#errors').remove();
+                $($divbabr).children('#errors').remove();
             },
             error: function(result) {
+
                 var errors = result.responseJSON.errors;
                 $bancos = errors.bancos;
-                $babr = errors.abr;
+                $babr = errors.babr;
                 $divban = $('#divbancos');
                 $divbabr = $('#divbabr');
                 $('#formBancos')[0].reset();

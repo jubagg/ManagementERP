@@ -14,5 +14,10 @@ class EmpresaHelper{
         return $empresa;
     }
 
+    public static function getAll(){
+        $empresa = Empresa::All();
+        return $empresa;
+    }
+
 }
 

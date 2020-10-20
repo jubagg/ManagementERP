@@ -16,13 +16,15 @@ class BancosController extends Controller
     }
 
     public function ajaxguardar(Request $request){
+
         $rules = [
             'bancos' => 'required',
-            'abr' => 'required'];
+            'babr' => 'required|max:3'];
 
             $messages =[
                 'bancos.required' => 'Debe ingresar un banco',
-                'abr.required' => 'Debe ingresar una abreviación'
+                'babr.required' => 'Debe ingresar una abreviación',
+                'babr.max' => 'Solo puede ingresar 3 carácteres'
             ];
         $validate = Validator::make($request->all(), $rules, $messages)->validateWithBag('post');
         //Una vez validado procedo a grabar
@@ -30,15 +32,15 @@ class BancosController extends Controller
         $bancos = $this->bancos::crearBanco(
             null,
             $request->input('bancos'),
-            $request->input('abr')
+            $request->input('babr')
         );
 
         $messageerror = null;
         $message = null;
-        if(isset($retorno['messageerror'])){
-            $messageerror = $retorno['messageerror'];
-        }elseif(isset($retorno['message'])){
-            $message = ($retorno['message']);
+        if(isset($bancos['messageerror'])){
+            $messageerror = $bancos['messageerror'];
+        }elseif(isset($bancos['message'])){
+            $message = ($bancos['message']);
         };
 
         return response()->json( ['message' => $message , 'messageerror' =>$messageerror]);
