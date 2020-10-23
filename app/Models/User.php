@@ -60,4 +60,18 @@ class User extends Authenticatable
             return (['messageerror' => 'Error al grabar el nuevo movimiento. Consulte con un programador '.$e->getMessage()] );
         }
     }
+
+    public static function eliminarUsuario($id){
+        try{
+            $usuario = User::find($id);
+            $usuario->delete();
+            return (['message' => 'Se ha eliminado el registro exitosamente']);
+        }catch(\Exception $e){
+            return (['messageerror' => 'No se ha eliminado el registro.' . ' ' . $e->getMessage()]);
+        }
+    }
+
+    public function roles(){
+        return $this->hasMany('App\Roles','rid',  'role');
+    }
 }

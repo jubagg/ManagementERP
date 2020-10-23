@@ -55,6 +55,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'reports' => [
+            'driver' => 'local',
+            'root' => storage_path('reports'),
+            'url' => env('APP_URL').'/storage/reports',
+            'visibility' => 'public',
+        ],
+
+        'img' => [
+            'driver' => 'local',
+            'root' => storage_path('img'),
+            'url' => env('APP_URL').'/storage/img',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

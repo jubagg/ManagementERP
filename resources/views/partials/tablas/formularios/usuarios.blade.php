@@ -4,11 +4,11 @@
         <div class="card-body">
             <div class="form-row">
                 {{-- Empresa --}}
-                <div class="col-6  border table-responsive">
-                    <table class="table table-sm table-hover" id="tablasusuarios" style="cursor: pointer">
+                <div class="col-7  border" style=" overflow:scroll;">
+                    <table class="table table-sm table-hover" id="tablasusuarios" style="cursor: pointer;">
                         <thead>
                             <tr>
-                                <th>Cod.</th>
+                                <th>Id</th>
                                 <th>Usuario</th>
                                 <th>Nombre</th>
                                 <th>Rol</th>
@@ -22,15 +22,21 @@
                                 <td scope="row">{{$u->id}}</td>
                                 <td>{{$u->user}}</td>
                                 <td>{{$u->name}}</td>
-                                <td>{{$u->role}}</td>
+                                @if($u->role != null)
+                                    @foreach($u->roles as $role)
+                                        <td>{{$role->rdesc}}</td>
+                                    @endforeach
+                                @else
+                                <td></td>
+                                @endif
                                 <td>{{$u->email}}</td>
-                                <td><a class="btn btn-danger btn-sm" href={{route('tablas.usuario.eliminar' , $u->sid)}}><i class="fas fa-trash-alt "></i></a></td>
+                                <td><a class="btn btn-danger btn-sm" href={{route('tablas.usuario.eliminar' , $u->id)}}><i class="fas fa-trash-alt "></i></a></td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                <div class ="col-6">
+                <div class ="col-5">
                     <form action="{{route('tablas.usuario.guardar')}}" method="post">
                     @csrf
                         <div class="card col-12">
@@ -90,7 +96,7 @@
                                   <select class="form-control" name="role" id="role">
                                     <option>Seleccionar</option>
                                     @foreach(\Roles::getAll() as $r)
-                                        <option value="{{$r->rid}}">{{$r->rdesc}}</option>
+                                        <option value="{{$r->rid}}" {{$r->rid == old('role') ? 'selected': ''}}>{{$r->rdesc}}</option>
                                     @endforeach
                                   </select>
                                 </div>

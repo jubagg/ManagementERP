@@ -180,6 +180,7 @@ return [
         App\Providers\FuncionesServiceProvider::class,
         App\Providers\SucursalesProvider::class,
         App\Providers\RolesProvider::class,
+        App\Providers\EstacionesProvider::class,
 
     ],
 
@@ -238,6 +239,7 @@ return [
         'Depositos' => App\Helpers\DepositosHelper::class,
         'Sucursales' => App\Helpers\SucursalHelper::class,
         'Roles' => App\Helpers\RolesHelper::class,
+        'Estaciones' => App\Helpers\EstacionesHelper::class,
 
     ],
 

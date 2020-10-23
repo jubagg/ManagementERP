@@ -52,4 +52,12 @@ class UsuariosController extends Controller
             return redirect()->route('tablas')->with($val);
 
         }
+
+        public function eliminarUsuario($usuario){
+            $limpios = $this->usuarios::eliminarUsuario($usuario);
+
+            $val = \Funciones::validaciones($limpios);
+            $val = array_merge($val, ['valortab' => 'usuarios']);
+            return redirect()->route('tablas')->with($val);
+        }
 }

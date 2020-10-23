@@ -1,3 +1,4 @@
+{{$slug = ''}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -178,6 +179,31 @@
         $('#sucnom').val(arrai[1]);
         $('#sucabr').val(arrai[2]);
 
+      });
+
+      $("#tablasusuarios tr").click(function() {
+        var arrai = [];
+        largo = $("td").length;
+        largo = largo + 1;
+        for(var i=1; i < largo ; i++){
+            arrai.push($(this).find("td:nth-child("+i+")").text());
+        }
+
+        $('#userid').val(arrai[0]);
+        $('#user').val(arrai[1]);
+        $('#name').val(arrai[2]);
+        $('#email').val(arrai[4]);
+        if(arrai[3] == 'cliente'){
+            $('#role').val(3);
+        }
+        if(arrai[3] == 'user'){
+            $('#role').val(2);
+        }
+        if(arrai[3] == 'admin'){
+            $('#role').val(1);
+        }else{
+            $('#role').val('');
+        }
       });
 
 

@@ -26,8 +26,9 @@ class HomeController extends Controller
         $sesion = \Funciones::sesionEstacion();
 
         $result = Estaciones::getEstacion($sesion);
+        $slug = '';
 
-        return view('home')->with(compact('sesion', 'result'));
+        return view('home')->with(compact('sesion', 'result','slug'));
 
 
 

@@ -11,8 +11,8 @@
         <i class="fas fa-users mx-1"></i>
         Usuarios
     </a>
-    <a class="nav-link" id="movimientos-stock-tab" data-toggle="pill" href="#movimientos-stock" role="tab" aria-controls="movimientos-stock" aria-selected="false" >
-        <i class="fas fa-people-carry mx-1"></i>
+    <a class="nav-link {{session('valortab') == 'terminales' ? 'active' : ''}}" id="terminales-tab" data-toggle="pill" href="#terminales" role="tab" aria-controls="terminales" aria-selected="false" >
+        <i class="fas fa-desktop mx-1"></i>
         Terminales y estaciones
     </a>
     <a class="nav-link" id="movimientos-stock-tab" data-toggle="pill" href="#movimientos-stock" role="tab" aria-controls="movimientos-stock" aria-selected="false" >

@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use PHPJasper\PHPJasper;
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +15,40 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $disco = Storage::url('reports');
+var_dump($disco);
+/*
+    $input = base_path() . '/vendor/geekcom/phpjasper/examples/Blank_A4.jrxml';
+    $output = base_path() . '/vendor/geekcom/phpjasper/examples';
+    $jasper = new PHPJasper;
+    //$output = $jasper->listParameters($input)->execute();
+    $options = [
+        'format' => ['pdf'],
+        'params' => ['param' => 'prueba de parametro']
+    ];
+
+
+        $jasper->process(
+            $input,
+            $output,
+            $options
+        )->execute();
+
+        $pathToFile = base_path() . '/vendor/geekcom/phpjasper/examples/Blank_A4.pdf';
+        $path = Storage::putFile('reports', $pathToFile); */
+
+        $content = Storage::disk('reports')->url('Blank_A4.pdf');
+        $dato = Storage::disk('reports')->download('Blank_A4.pdf');
+
+        return response()->header('Cache-Control' , 'no-cache private')
+            ->header('Content-Description' ,'File Transfer')
+            ->header('Content-Type' , 'pdf')
+            ->header('Content-length' , strlen($dato))
+            ->header('Content-Disposition' , 'attachment; filename=test.pdf')
+            ->header('Content-Transfer-Encoding' , 'binary')->view('welcome');
+
+
 });
 //Cliente GET
 Route::get('/clientes/crear' ,'ClientesController@crear_modificar' )->name('clientes.crear');
@@ -90,6 +124,8 @@ Route::post('/tablas/sucursales/guardar' , 'SucursalesController@guardarSucursal
 Route::get('/tablas/sucursales/eliminar/{sucursal?}' , 'SucursalesController@eliminarSucursal')->name('tablas.sucursales.eliminar');
 Route::post('/tablas/usuarios/guardar' , 'UsuariosController@guardarUsuario')->name('tablas.usuario.guardar');
 Route::get('/tablas/usuarios/eliminar/{usuario?}' , 'UsuariosController@eliminarUsuario')->name('tablas.usuario.eliminar');
+Route::post('/tablas/estacion/guardar' , 'EstacionesController@guardarEstacion')->name('tablas.estacion.guardar');
+Route::get('/tablas/estacion/eliminar/{terminal?}' , 'EstacionesController@eliminarEstacion')->name('tablas.estacion.eliminar');
 
 Auth::routes();
 

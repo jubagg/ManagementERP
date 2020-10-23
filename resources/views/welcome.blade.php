@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('content')
-prueba
+pruebaaaaaa
+
+
+
 @endsection
 
