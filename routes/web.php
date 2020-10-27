@@ -16,40 +16,8 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
 
-    $disco = Storage::url('reports');
-var_dump($disco);
-/*
-    $input = base_path() . '/vendor/geekcom/phpjasper/examples/Blank_A4.jrxml';
-    $output = base_path() . '/vendor/geekcom/phpjasper/examples';
-    $jasper = new PHPJasper;
-    //$output = $jasper->listParameters($input)->execute();
-    $options = [
-        'format' => ['pdf'],
-        'params' => ['param' => 'prueba de parametro']
-    ];
-
-
-        $jasper->process(
-            $input,
-            $output,
-            $options
-        )->execute();
-
-        $pathToFile = base_path() . '/vendor/geekcom/phpjasper/examples/Blank_A4.pdf';
-        $path = Storage::putFile('reports', $pathToFile); */
-
-        $content = Storage::disk('reports')->url('Blank_A4.pdf');
-        $dato = Storage::disk('reports')->download('Blank_A4.pdf');
-
-        return response()->header('Cache-Control' , 'no-cache private')
-            ->header('Content-Description' ,'File Transfer')
-            ->header('Content-Type' , 'pdf')
-            ->header('Content-length' , strlen($dato))
-            ->header('Content-Disposition' , 'attachment; filename=test.pdf')
-            ->header('Content-Transfer-Encoding' , 'binary')->view('welcome');
-
-
 });
+
 //Cliente GET
 Route::get('/clientes/crear' ,'ClientesController@crear_modificar' )->name('clientes.crear');
 Route::get('/clientes/modificar/{clienteid?}' , 'ClientesController@crear_modificar'  )->name('clientes.modificar');

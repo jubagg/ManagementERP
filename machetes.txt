@@ -1,0 +1,40 @@
+  manejo de archivos para reportes
+    $img= Storage::disk('img')->path('');
+    var_dump($img);
+    $input = Storage::disk('reports')->path('Blank_A4.jrxml');
+
+    $output = Storage::disk('reports')->path('');
+
+    $jasper = new PHPJasper;
+    $jasper->compile($input)->execute();
+
+    $input = Storage::disk('reports')->path('Blank_A4.jasper');
+    $logo = Storage::disk('img')->path('logo.png');
+    //$output = $jasper->listParameters($input)->execute();
+
+    //$output = $jasper->listParameters($input)->execute();
+
+    $options = [
+        'format' => ['pdf'],
+        'params' =>['param' => $logo, 'img' => $img],
+    ];
+
+
+/*         dd($jasper->process(
+            $input,
+            $output,
+            $options
+        )->output()); */
+
+        $jasper->process(
+            $input,
+            $output,
+            $options
+        )->execute();
+
+
+        //$pathToFile = base_path() . '/vendor/geekcom/phpjasper/examples/Blank_A4.pdf';
+        //$path = Storage::putFile('reports', $pathToFile);
+
+        //$content = Storage::disk('reports')->url('Blank_A4.pdf');
+        //$dato = Storage::disk('reports')->download('Blank_A4.pdf');
