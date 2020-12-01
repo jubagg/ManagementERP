@@ -181,6 +181,12 @@ return [
         App\Providers\SucursalesProvider::class,
         App\Providers\RolesProvider::class,
         App\Providers\EstacionesProvider::class,
+        App\Providers\MarcasEmisoresProvider::class,
+        App\Providers\CentrosEmisoresProvider::class,
+        App\Providers\CajasProvider::class,
+        App\Providers\CondicionVentaProvider::class,
+        App\Providers\ListaPreciosProvider::class,
+        App\Providers\PredeterminadosProvider::class,
 
     ],
 
@@ -240,6 +246,12 @@ return [
         'Sucursales' => App\Helpers\SucursalHelper::class,
         'Roles' => App\Helpers\RolesHelper::class,
         'Estaciones' => App\Helpers\EstacionesHelper::class,
+        'MarcasEmisores' => App\Helpers\MarcasEmisoresHelper::class,
+        'Emisores' => App\Helpers\CentrosEmisoresHelper::class,
+        'Cajas' => App\Helpers\CajasHelper::class,
+        'ConVen' => App\Helpers\CondicionesVentaHelper::class,
+        'ListaPrecios' => App\Helpers\ListaPreciosHelper::class,
+        'Pred' => App\Helpers\PredeterminadosHelper::class,
 
     ],
 

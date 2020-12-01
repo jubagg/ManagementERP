@@ -72,7 +72,7 @@
                                         <div class="form-group">
                                             <label for="password"><strong>Contraseña</strong></label>
                                             <input type="password"
-                                            class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}" name="password" id="password" aria-describedby="helpId" placeholder="" value="{{$errors->has('password') ? '' : old('password')}}">
+                                            class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}" name="password" id="password" autocomplete="off" value="{{$errors->has('password') ? '' : old('password')}}">
                                             @if($errors->has('password'))
                                                 <small class="form-text text-danger">{{$errors->first('password')}}</small>
                                             @endif

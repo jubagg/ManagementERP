@@ -1,10 +1,12 @@
 $token = { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') };
 $url = $('#codartstkroute').val();
 cantidad = $('#codcantstk').val();
+$urlemisoresnumeracion = $('#rutaeminum').val();
 $idarticulo = null;
 $tipomov = null;
 $tipocom = null;
 $deposito = null;
+
 
 function selecttipomov() {
     if ($tipomov === null || $("#tipmovstk :selected").val() == 'Seleccionar') {
@@ -65,13 +67,15 @@ function buscaarticulo() {
                     $('#alert').children("div").remove();
                     $('#alert').append('<div class=" col-12 justify-content-center text-center d-inline-flex" id="message"><div class="alert alert-danger col-8">No se ingreso ningún artículo</div></div>');
                 } else {
-                    $idarticulo = result.artcod;
-                    console.log(result);
-                    //if(result.coddescalt != null){
-                    table.updateOrAddRow(result.artcod, { id: result.artcod, codart: result.coddescalt, descripcion: result.artdesc, unmed: result.tmabr });
-                    //}else{
-                    table.updateOrAddRow(result.artcod, { id: result.artcod, codart: result.artcod, descripcion: result.artdesc, unmed: result.tmabr });
-                    //`}
+
+
+                    if (result.coddescalt != null) {
+                        $idarticulo = result.codcod;
+                        table.addRow({ id: result.codcod, codart: result.artcod, descripcion: result.coddescalt, unmed: result.tmabr });
+                    } else {
+                        $idarticulo = result.artcod;
+                        table.updateOrAddRow(result.artcod, { id: result.artcod, codart: result.artcod, descripcion: result.artdesc, unmed: result.tmabr });
+                    }
                     $('#alert').children("div").remove();
                     $('#codcantstk').focus();
                 };
@@ -100,6 +104,7 @@ function autocomplete() {
         success: function($result) {
             $result = JSON.parse($result);
             $.each($result, function(key, value) {
+                arrai.push({ label: value.coddescalt, value: value.codcod });
                 arrai.push({ label: value.artdesc, value: value.artcod });
             });
             $('#codartstk').autocomplete({
@@ -121,9 +126,10 @@ function validadcantidad() {
     tipomov = selecttipomov();
     cantidad = $('#codcantstk').val();
     fecha = $('#fecmov').val();
+    deposito = selectdepos();
     if (articulo != null) {
         $.ajax({
-            url: $url + '/' + articulo + '/' + tipomov + '/' + cantidad + '/' + fecha,
+            url: $url + '/' + articulo + '/' + tipomov + '/' + cantidad + '/' + fecha + '/' + deposito,
             method: 'post',
             headers: $token,
             data: {
@@ -131,6 +137,7 @@ function validadcantidad() {
                 tipomov: tipomov,
                 cantidad: cantidad,
                 fecha: fecha,
+                deposito: deposito,
             },
             success: function(result) {
                 var result = JSON.parse(result);
@@ -224,7 +231,7 @@ $('#codartstk').focus(function() {
 $('#codartstk').keydown(function(event) {
     var regex = new RegExp("^[a-zA-Z ]+$");
     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-    if (regex.test(key) && $('#codartstk').val().length > 1) {
+    if (regex.test(key) && $('#codartstk').val().length > 0) {
         autocomplete();
     }
 });
@@ -263,6 +270,7 @@ $(document).ready(function() {
     selecttipocomp();
     selecttipomov();
     selectdepos();
+    listadoOriginal();
 });
 
 $('#tipmovstk').change(function() {
@@ -319,6 +327,7 @@ $('#codprecstk').keydown(function(e) {
         var data = table.getData();
         selectedData = JSON.stringify(data);
         $('#tabladatos').val(selectedData);
+
     }
 });
 //actualizar cantidad en la celda de la fila seleccionada, busca por id de articulo
@@ -363,3 +372,103 @@ var table = new Tabulator("#example-table", {
         { title: "Precio final", field: "prefin", width: 160 },
     ],
 });
+$igualdad = {
+    ">": "Mayor",
+    "<": "Menor",
+    "=": "Igual",
+    "between": "Desde/Hasta",
+}
+
+$filtros = [{ id: "art", tipfil: "Cod. Art.", igual: "=" }, { id: "dep", tipfil: "Cod. Deposito", igual: "=" }, { id: "fec", tipfil: "Fecha", igual: "=" }, { id: "suc", tipfil: "Sucursal", igual: "=" }];
+
+var tablafiltros = new Tabulator("#tablastockfiltros", {
+    layout: "fitColumns",
+    selectable: true,
+    data: $filtros,
+    initialSort: [ //set the initial sort order of the data
+        { column: "id", dir: "asc" },
+    ],
+    columns: [ //define the table columns
+        { title: "ID", field: "id", width: 50 },
+        { title: "Tipo de filtro", field: "tipfil", width: 120 },
+        {
+            title: "Igualdad",
+            field: "igual",
+            editor: "select",
+            width: 120,
+            editorParams: {
+                values: $igualdad
+            }
+        },
+        { title: "Desde", field: "desde", editor: true, width: 100 },
+        { title: "Hasta", field: "hasta", editor: true, width: 100 },
+    ],
+});
+
+var tablalistado = new Tabulator("#tablastocklistado", {
+    layout: "fitColumns",
+    pagination: "local",
+    paginationSize: 10,
+    selectable: true,
+    data: listadoOriginal(),
+    initialSort: [ //set the initial sort order of the data
+        { column: "codart", dir: "asc" },
+    ],
+    columns: [ //define the table columns
+        { title: "Código articulo", field: "codart", width: 70 },
+        { title: "Descripción", field: "descripcion", width: 200 },
+        { title: "UM", field: "unmed", width: 100 },
+        { title: "Cantidad", field: "cant", width: 140 },
+    ],
+});
+
+//listados de stock
+function listadoOriginal() {
+    var arrayDatos = [];
+    $.each(listadoor, function(key, value) {
+        return arrayDatos.push({ 'codart': value.stkdetidart, 'descripcion': value.stkdetart, 'unmed': value.tmdesc, 'cant': value.suma });
+    });
+    return arrayDatos;
+}
+
+//recuperar numeracion del fiscal
+$numcom = $('#numcom');
+
+$('#cememisor').focusout(function() {
+    $emisor = $('#cememisor').val();
+    $tipcom = $('#tipcom').val();
+    $datos = {
+        emisor: $emisor,
+        tipcom: $tipcom
+    };
+    recuperarNumeracion($emisor, $tipcom, $urlemisoresnumeracion, $datos, $token, $numcom);
+});
+
+$('#tipcom').focusout(function() {
+    $emisor = $('#cememisor').val();
+    $tipcom = $('#tipcom').val();
+    $datos = {
+        emisor: $emisor,
+        tipcom: $tipcom
+    };
+    recuperarNumeracion($emisor, $tipcom, $urlemisoresnumeracion, $datos, $token, $numcom);
+});
+
+function recuperarNumeracion(emisor, tipcom, url, data, token, location) {
+    $.ajax({
+        type: "POST",
+        url: url + '/' + emisor + '/' + tipcom,
+        headers: token,
+        data: { data },
+        success: function(response) {
+            var response = JSON.parse(response);
+            if (response == null) {
+                alert('Error! El centro emisor no existe! ')
+            } else {
+                $numero = parseInt(response.ultnum);
+                var $valor = $numero + 1;
+                location.val($valor);
+            }
+        }
+    });
+}

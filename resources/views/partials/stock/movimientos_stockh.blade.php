@@ -6,7 +6,7 @@
             <h1 class=" h4 d-none d-inline-block">
                 {{$htitulo}}
                 <br>
-                <small class="text-info">{{$hmintit}}</small>
+                <small class="text-info" id="infostock">{{$hmintit}}</small>
             </h1>
         </div>
         <div class="col-1 text-center">

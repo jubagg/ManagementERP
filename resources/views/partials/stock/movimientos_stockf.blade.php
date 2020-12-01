@@ -2,6 +2,7 @@
     <div class="tab-pane fade show active" id="crear-movimiento" role="tabpanel" aria-labelledby="crear-movimiento-tab">
         <input type="hidden" class="form-control" name="codartstkroute" id="codartstkroute" value="{{route('stock.movimientos.articulos')}}">
         <input type="hidden" class="form-control" name="codartnegativos" id="codartnegativos" value="{{route('stock.movimientos.negativos')}}">
+        <input type="hidden" class="form-control" name="rutaeminum" id="rutaeminum" value="{{route('emisores.numeradores')}}">
         {{-- FORMULARIO --}}
         <form action="{{route('stock.movimientos.guardar')}}" method="post">
             @csrf
@@ -88,7 +89,7 @@
         </form>
     </div>
     <div class="tab-pane fade" id="movimientos-stock" role="tabpanel" aria-labelledby="movimientos-stock-tab">
-
+        @include('partials.stock.listado')
     </div>
   </div>
 

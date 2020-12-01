@@ -8,7 +8,8 @@ use App\Articulos;
 use App\Proveedores;
 use App\Stock;
 use App\StockDetalle;
-
+use App\Precios;
+use App\CentrosNumeracion;
 
 class StockController extends Controller
 {
@@ -18,13 +19,19 @@ class StockController extends Controller
     private $proveedores;
     private $stock;
     prIvate $stockDetalle;
+    private $precios;
+    private $centrosnumeracion;
+    //private $preciosHistoricos;
 
-    public function __construct(StockDetalle $stockDetalle,TiposMovimSt $tiposmovimst, Articulos $articulo, Proveedores $proveedores, Stock $stock){
+    public function __construct(CentrosNumeracion $centrosnumeracion, Precios $precios, StockDetalle $stockDetalle,TiposMovimSt $tiposmovimst, Articulos $articulo, Proveedores $proveedores, Stock $stock){
         $this->tiposmovimst = $tiposmovimst;
         $this->articulo = $articulo;
         $this->proveedores = $proveedores;
         $this->stock = $stock;
         $this->stockDetalle = $stockDetalle;
+        $this->precios = $precios;
+        $this->centrosnumeracion = $centrosnumeracion;
+
     }
     public function crear(){
         $titulo = 'Movimientos de stock';
@@ -36,9 +43,12 @@ class StockController extends Controller
         $hmintit = 'Nuevo movimiento de stock';
         $tiposmov = $this->tiposmovimst::getAll();
         $proveedores = $this->proveedores::getAll();
+        $listados = $this->stockDetalle::getListados();
+
+        $emisor = \Pred::getPredeterminados( \Estaciones::getEstacion(\Funciones::getSession() != null ? \Funciones::getSession() : 0));
         //$empresa = \
 
-        return view('/stock/movimientos')->with(compact('titulo','menu','slug','header','icon','htitulo','hmintit','tiposmov', 'proveedores'));
+        return view('/stock/movimientos')->with(compact('titulo','menu','slug','header','icon','htitulo','hmintit','tiposmov', 'proveedores', 'emisor','listados'));
 
     }
 
@@ -49,56 +59,80 @@ class StockController extends Controller
         $cenem = $request['cememisor'];
         $compn = $request['numcom'];
         $idcli = $request['deposito'];
+        $stockres = null;
 
         $valores = $request->all();
-        //enlace
+
+        //genero el id para el comprobante
         $id = \Funciones::generateId($tipoc, $tipomov, $cenem, $compn, $idcli);
+        //limpio el request
         $requestLimpio = \Funciones::limpiarRequest($valores , $id);
+
+        //traduzco los datos de la tabla
         $stockDetalle = json_decode($request['tabladatos'], true);
 
+        //valido que la operacion no sea ni movimientro entre deposito o movimiento de compra
+        if(($tipomov != '98') && ($tipomov != '99')){
+            $stockres = $this->stock::saveMovim($requestLimpio);
+            if(isset($stockres['message'])){
+                $stockres = $this->stockDetalle::saveMovimDet($stockDetalle, $requestLimpio);
+                $this->centrosnumeracion::actualizarNumeracion($cenem, $tipoc,$compn);
+                if(isset($stockres['messageerror'])){
+                    $stockres = $this->stock::deletemov($id);
+                    $val = \Funciones::validaciones($stockres);
+                    return redirect()->route('stock.movimientos')->with($val);
+                }
+                $val = \Funciones::validaciones($stockres);
+                return redirect()->route('stock.movimientos')->with($val);
+            }
+        }
 
-        //$stockres = $this->stockDetalle::saveMovimDet($stockDetalle, $requestLimpio);
 
-        //$stockres = $this->stock::saveMovim($requestLimpio);
-        //if(isset($stockres['message'])){
-            $stockres = $this->stockDetalle::saveMovimDet($stockDetalle, $requestLimpio);
-        //}elseif(isset($stockres['message'])){
+        //grabo movimiento entre depositos
+        elseif($tipomov == 98 ){
+            $stockres = $this->stock::saveMovim($requestLimpio);
+            if(isset($stockres['message'])){
+                $stockres = $this->stockDetalle::saveMovimDetEDep($stockDetalle, $requestLimpio);
+                $this->centrosnumeracion::actualizarNumeracion($cenem, $tipoc,$compn);
+                if(isset($stockres['messageerror'])){
+                    $stockres = $this->stock::deletemov($id);
+                    $val = \Funciones::validaciones($stockres);
+                    return redirect()->route('stock.movimientos')->with($val);
+                }
+                $val = \Funciones::validaciones($stockres);
+                return redirect()->route('stock.movimientos')->with($val);
+            }
+        }
 
-        //}
+        //comprobantes de compras
+        elseif($tipomov == 99 ){
 
-        var_dump($stockres);
+            $stockres = $this->stock::saveMovim($requestLimpio);
+            if(isset($stockres['message'])){
 
-        die();
-        //cabecera
-        /* "user" */
-        /* "tipmovstk"
-        ,"deposito"
-        "cememisor"
-        "numcom"
-        "fecmov"
-        //proveedor
-        "proveedor"
-        "cempro"
-        "numcompro"
-        "feccompro"
-        //movim entre deposito
-        "depori"
-        "depdes"
-        "cemprop"
-        "compint"
-        "fecmovint"
-        // helpers
-        "codartstk"
-        "codcantstk"
-        "codprecstk"
-        //comrpobante detalle*/
-        $datostabla = json_decode($request->input["tabladatos"]);
-        foreach($datostabla as $dt){
-          echo $dt;  
-        }; 
-        //contabilidad
-        /* */
+                $stockres = $this->stockDetalle::saveMovimDet($stockDetalle, $requestLimpio);
+
+                if(isset($stockres['messageerror'])){
+                    $stockres = $this->stock::deletemov($id);
+                    $val = \Funciones::validaciones($stockres);
+                    return redirect()->route('stock.movimientos')->with($val);
+                }
+                if(isset($stockres['message'])){
+                    $stockres = $this->precios::setPrecios($requestLimpio,$stockDetalle);
+                    $this->centrosnumeracion::actualizarNumeracion($cenem, $tipoc,$compn);
+                    if(isset($stockres['messageerror'])){
+                        $stockres = $this->stock::deletemov($id);
+                        $stockres = $this->stockDetalle::deletemov($id);
+                        $val = \Funciones::validaciones($stockres);
+                        return redirect()->route('stock.movimientos')->with($val);
+                    }
+                }
+            }
+        }
+        $val = \Funciones::validaciones($stockres);
+        return redirect()->route('stock.movimientos')->with($val);
     }
+
 
     public function busquedaArticulos($articulo = null){
         $articulo = $this->articulo::getArticulo($articulo);
@@ -106,9 +140,9 @@ class StockController extends Controller
             return $articulo;
     }
 
-    public function controlNegativosController($articulo = null, $tipoc = null, $cantidad = null, $fecha = null){
+    public function controlNegativosController($articulo = null, $tipoc = null, $cantidad = null, $fecha = null, $deposito = null){
         $fecha = $fecha.' '.date("H:i:s");
-        $control = $this->articulo::controlNegativos($articulo, $tipoc, $cantidad, $fecha);
+        $control = $this->articulo::controlNegativos($articulo, $tipoc, $cantidad, $fecha,$deposito);
         $control = json_encode($control);
         return $control;
     }

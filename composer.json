@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "afipsdk/afip.php": "^0.6.1",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "geekcom/phpjasper": "^3.3",
@@ -49,7 +50,10 @@
             "app/Helpers/DepositosHelper.php",
             "app/Helpers/SucursalHelper.php",
             "app/Helpers/RolesHelper.php",
-            "app/Helpers/EstacionesHelper.php"
+            "app/Helpers/EstacionesHelper.php",
+            "app/Helpers/CajasHelper.php",
+            "app/Helpers/CondicionesVentaHelper.php",
+            "app/Helpers/ListaPreciosHelper.php"
         ]
     },
     "autoload-dev": {

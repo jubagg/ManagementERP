@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gmclidet" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="10" uuid="470ad3a7-1614-49a9-871a-91ba184ea73d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<parameter name="empresa" class="java.lang.String"/>
+	<parameter name="cuitempre" class="java.lang.String"/>
+	<parameter name="telempre" class="java.lang.String"/>
+	<parameter name="correoempre" class="java.lang.String"/>
+	<parameter name="clicod" class="java.lang.String"/>
+	<parameter name="path" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from managementerp.mgcli as cli
+inner join managementerp.mgclicatres as cat
+inner join managementerp.mgclitipdoc as doc
+ on cli.clicatdoc = doc.tdid and cli.clicatres = cat.crid
+ where cli.clisiscod = 1 and cli.clicodsis =  $P{clicod}]]>
+	</queryString>
+	<field name="clicodsis" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clicodsis"/>
+		<property name="com.jaspersoft.studio.field.label" value="clicodsis"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clifantasia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="clifantasia"/>
+		<property name="com.jaspersoft.studio.field.label" value="clifantasia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clirazons" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="clirazons"/>
+		<property name="com.jaspersoft.studio.field.label" value="clirazons"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clicatdoc" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clicatdoc"/>
+		<property name="com.jaspersoft.studio.field.label" value="clicatdoc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clicuit" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clicuit"/>
+		<property name="com.jaspersoft.studio.field.label" value="clicuit"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clidir" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="clidir"/>
+		<property name="com.jaspersoft.studio.field.label" value="clidir"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clipais" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clipais"/>
+		<property name="com.jaspersoft.studio.field.label" value="clipais"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliprov" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cliprov"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliprov"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliloc" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cliloc"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliloc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clicp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="clicp"/>
+		<property name="com.jaspersoft.studio.field.label" value="clicp"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clitel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="clitel"/>
+		<property name="com.jaspersoft.studio.field.label" value="clitel"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliweb" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cliweb"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliweb"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliemail" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cliemail"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliemail"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clisuc" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clisuc"/>
+		<property name="com.jaspersoft.studio.field.label" value="clisuc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clizona" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clizona"/>
+		<property name="com.jaspersoft.studio.field.label" value="clizona"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clicatcli" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clicatcli"/>
+		<property name="com.jaspersoft.studio.field.label" value="clicatcli"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clicatres" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clicatres"/>
+		<property name="com.jaspersoft.studio.field.label" value="clicatres"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clicatiibb" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clicatiibb"/>
+		<property name="com.jaspersoft.studio.field.label" value="clicatiibb"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliiibb" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="cliiibb"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliiibb"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clicatgan" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clicatgan"/>
+		<property name="com.jaspersoft.studio.field.label" value="clicatgan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cligan" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="cligan"/>
+		<property name="com.jaspersoft.studio.field.label" value="cligan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clilimcre" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="clilimcre"/>
+		<property name="com.jaspersoft.studio.field.label" value="clilimcre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliconven" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cliconven"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliconven"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clidescue" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="clidescue"/>
+		<property name="com.jaspersoft.studio.field.label" value="clidescue"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clialta" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="clialta"/>
+		<property name="com.jaspersoft.studio.field.label" value="clialta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="climod" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="climod"/>
+		<property name="com.jaspersoft.studio.field.label" value="climod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clibaj" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="clibaj"/>
+		<property name="com.jaspersoft.studio.field.label" value="clibaj"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clidesac" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="clidesac"/>
+		<property name="com.jaspersoft.studio.field.label" value="clidesac"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliobs" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cliobs"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliobs"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clisiscod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="clisiscod"/>
+		<property name="com.jaspersoft.studio.field.label" value="clisiscod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgcli"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="crid" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="crid"/>
+		<property name="com.jaspersoft.studio.field.label" value="crid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgclicatres"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="crdes" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="crdes"/>
+		<property name="com.jaspersoft.studio.field.label" value="crdes"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgclicatres"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tdid" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="tdid"/>
+		<property name="com.jaspersoft.studio.field.label" value="tdid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgclitipdoc"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tddes" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tddes"/>
+		<property name="com.jaspersoft.studio.field.label" value="tddes"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mgclitipdoc"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="119" splitType="Stretch">
+			<textField>
+				<reportElement x="281" y="1" width="274" height="30" uuid="88a801fd-517d-4bf2-9bd3-a05f09e05bfb"/>
+				<textElement textAlignment="Right">
+					<font size="19"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Reporte: " +$P{titulo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-3" y="118" width="560" height="1" uuid="b789ba21-a55e-47bb-88de-3d1535686230"/>
+			</line>
+			<textField>
+				<reportElement x="370" y="30" width="184" height="20" uuid="02b72139-5963-4698-9862-3dcf0abb32b0"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="50" width="184" height="20" uuid="3dbe8df7-7c6c-4c52-90b3-0b1566b05b18"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["C.U.I.T.: " +$P{cuitempre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="70" width="184" height="20" uuid="175be6ee-9408-48e6-a323-6252abd1c323"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Teléfono: " +$P{telempre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="90" width="276" height="20" uuid="19fcf827-823f-4bbb-a8e6-92a52672cda6"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Correo: " +$P{correoempre}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Top" onErrorType="Blank">
+				<reportElement x="0" y="0" width="279" height="80" uuid="eda629ee-d210-4b78-ad64-03c68f2c6b28"/>
+				<imageExpression><![CDATA[$P{path} + "logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="287" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="10" width="250" height="19" uuid="6d2bc656-1d30-48f5-8fe2-fbad7ccca47f"/>
+				<textElement markup="styled">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Código sistema: " + "</style>" + $F{clicodsis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="33" width="250" height="18" uuid="f01335e8-cb7f-4c4f-95f3-a23317f7f1ba"/>
+				<textElement markup="styled">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Nombre: " + "</style>"  +$F{clifantasia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="56" width="250" height="18" uuid="f34e084e-b412-402a-a382-353155e8a64a"/>
+				<textElement markup="styled">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Razón social: " + "</style>" + $F{clirazons}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="79" width="250" height="18" uuid="33d0f360-4ffe-4440-aa69-c89b14091885"/>
+				<textElement markup="styled">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Tipo de documento: " + "</style>" +$F{tddes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="103" width="250" height="18" uuid="9cd90f1e-44a4-496e-bcd0-d6ec6a234702"/>
+				<textElement markup="styled">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Número de documento: " + "</style>" + $F{clicuit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="127" width="250" height="18" uuid="adf8bcb0-8094-48bb-9e50-22108ba81ca9"/>
+				<textElement markup="styled">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Dirección: " + "</style>" + IF($F{clidir} != null,$F{clidir},"--")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="295" y="10" width="250" height="18" uuid="3c75c5fa-75e4-47eb-8dbd-615dba45a03f"/>
+				<textElement markup="styled">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Fecha de alta: " + "</style>" + new SimpleDateFormat("MM/dd/yyyy").format($F{clialta})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="153" width="250" height="18" uuid="1fef13e4-1be0-498f-8b80-971c256bfaee"/>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Localidad: " + "</style>" + IF($F{cliloc} != null, $F{cliloc}, "--")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="295" y="33" width="248" height="18" uuid="04d5ec1c-8b73-4765-b8d3-0e2add104c51"/>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA[IF($F{climod} != null, "<style isBold='true'>" + "Ultima fecha de mod.: " + "</style>" + $F{climod} , "<style isBold='true'>" + "Ultima fecha de mod.: " + "</style>" + "--")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="176" width="250" height="18" uuid="ed32e542-4ff0-4b05-a1d6-1a1a088fd9a5"/>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Teléfono: " + "</style>" + IF($F{clitel} != null, $F{clitel}, "--")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="295" y="56" width="250" height="18" uuid="a0f35ecd-2a81-48df-a350-96e60d593bd7"/>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Límite de crédito: " + "</style>" + IF($F{clilimcre} != null, $F{clilimcre}, "--")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50">
+			<line>
+				<reportElement x="134" y="16" width="270" height="1" uuid="6f0abbc0-12ab-4898-98ec-a06d588bf90e"/>
+			</line>
+			<staticText>
+				<reportElement x="180" y="23" width="194" height="23" uuid="d5d60672-1e32-450f-a1b3-047ce6e7789f"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Firmo como prueba fehaciente que me he adherido a esta empresa como cliente.]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="43" splitType="Stretch">
+			<textField>
+				<reportElement x="360" y="16" width="150" height="14" uuid="90b78963-a064-4018-bc92-4f4d22028f71"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="510" y="16" width="48" height="13" uuid="257a7b47-8e8d-4d32-a4ed-5c252d31a676"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d MMMM, yyyy">
+				<reportElement x="20" y="16" width="170" height="13" uuid="9200b04e-cb49-42f1-b9e9-347aeee48ccb"/>
+				<textFieldExpression><![CDATA["Fecha: " +new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-5" y="8" width="560" height="1" uuid="1dd5c084-9962-4f96-a748-13f7eec3b86b"/>
+			</line>
+			<staticText>
+				<reportElement x="20" y="29" width="242" height="14" uuid="6fd7c0c0-c543-4216-a293-404660ee7a84"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Desarrollado por FireProject Sistemas]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -69,6 +69,19 @@ return [
             'visibility' => 'public',
         ],
 
+        'process' => [
+            'driver' => 'local',
+            'root' => storage_path('process'),
+            'url' => env('APP_URL').'/storage/process',
+            'visibility' => 'public',
+        ],
+
+        'conf' => [
+            'driver' => 'local',
+            'root' => storage_path('conf'),
+            'url' => env('APP_URL').'/storage/conf',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

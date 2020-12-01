@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\MgMenu;
+use App\Mgmenu;
 use App\Generales;
 
 class AppServiceProvider extends ServiceProvider

@@ -14,4 +14,11 @@ class EstacionesHelper{
         return $empresa;
     }
 
+    public static function getEstacion($id){
+        $estacion = Estaciones::where('estnomred', '=', $id)->first();
+        if(!empty($estacion)){
+            return $estacion->id;
+        }
+    }
+
 }

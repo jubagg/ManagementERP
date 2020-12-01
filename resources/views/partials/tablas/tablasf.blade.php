@@ -3,4 +3,6 @@
     @include('partials.tablas.formularios.sucursales')
     @include('partials.tablas.formularios.usuarios')
     @include('partials.tablas.formularios.terminales')
-  </div>
+    @include('partials.tablas.formularios.emisores')
+    @include('partials.tablas.formularios.predeterminados')
+</div>

@@ -39,4 +39,16 @@ class Stock extends Model
             return (['messageerror' => 'Error al grabar el nuevo movimiento. Consulte con un programador '.$e->getMessage()]);
         }
     }
+
+    public static function deleteMov($id){
+        if($id != null){
+            try{
+                $movimiento = Stock::find($id);
+                $movimiento->delete();
+                return (['message' => 'Se ha eliminado el comprobante']);
+            }catch(\Exception $e){
+                return (['messageerror' => 'Error al eliminar el movimiento. Consulte con un programador '.$e->getMessage()] );
+            }
+        }
+    }
 }

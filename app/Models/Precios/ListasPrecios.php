@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ListasPrecios extends Model
 {
-    protected $table = 'mgstkcab';
-    protected $primaryKey = 'stkid';
+    protected $table = 'mglistaprecios';
+    protected $primaryKey = 'lpid';
     public $timestamps = false;
 }

@@ -27,7 +27,7 @@
     <div class="col-1">
         <div class="form-group">
             <label for="cememisor">C. Emisor</label>
-            <input type="text" class="form-control" name="cememisor" id="cememisor" aria-describedby="helpId" placeholder="">
+            <input type="text" class="form-control" name="cememisor" id="cememisor" aria-describedby="helpId" placeholder="" value="{{$emisor != null ? $emisor->premovstk : ''}}">
         </div>
     </div>
     {{-- Num comprobante --}}

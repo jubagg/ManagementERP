@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use PHPJasper\PHPJasper;
 use Illuminate\Support\Facades\Storage;
+use App\StockDetalle;
+use App\CentrosNumeracion;
+use App\Articulos;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +18,20 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
+    //$resultado = \Funciones::pruebasAFIP();
+/*     $input = Storage::disk('reports')->files();
+     var_dump($input); */
+/* $id = Pred::getPredeterminados( \Estaciones::getEstacion(\Funciones::getSession()));
 
+    return $id; */
+/*
+$centro = StockDetalle::getListados();
+$centro = Funciones::getReportes(); */
+
+$listado = Articulos::artPrecios();
+var_dump($listado);
+
+die();
 });
 
 //Cliente GET
@@ -49,7 +65,7 @@ Route::get('codigos/codigosmultiples/eliminar/{articuloid}/barcode/{codigoid}', 
 //stock movimientos
 Route::get('/stock/movimientos' , 'StockController@crear')->name('stock.movimientos');
 Route::post('/stock/movimientos/articulo/{articulo?}' , 'StockController@busquedaArticulos')->name('stock.movimientos.articulos');
-Route::post('/stock/movimientos/articulo/{articulo?}/{tipomov?}/{cantidad?}/{fecha?}' , 'StockController@controlNegativosController')->name('stock.movimientos.negativos');
+Route::post('/stock/movimientos/articulo/{articulo?}/{tipomov?}/{cantidad?}/{fecha?}/{deposito?}' , 'StockController@controlNegativosController')->name('stock.movimientos.negativos');
 Route::post('/stock/movimientos/guardar', 'StockController@guardarStock' )->name('stock.movimientos.guardar');
 Route::get('/stock/depositos'  )->name('stock.depositos');
 
@@ -86,15 +102,37 @@ Route::post('/subfamilias/guardar', 'SubfamiliasController@crearSubfamilias')->n
 
 //tablas del sistema
 Route::get('/tablas/' , 'TablasController@configuracionSistema')->name('tablas');
+//empresas
 Route::post('/tablas/empresas/guardar' , 'EmpresaController@guardarEmpresa')->name('tablas.empresas.guardar');
 Route::get('/tablas/empresas/eliminar/{empresa?}' , 'EmpresaController@eliminarEmpresa')->name('tablas.empresas.eliminar');
+//sucursales
 Route::post('/tablas/sucursales/guardar' , 'SucursalesController@guardarSucursal')->name('tablas.sucursales.guardar');
 Route::get('/tablas/sucursales/eliminar/{sucursal?}' , 'SucursalesController@eliminarSucursal')->name('tablas.sucursales.eliminar');
+//usuarios
 Route::post('/tablas/usuarios/guardar' , 'UsuariosController@guardarUsuario')->name('tablas.usuario.guardar');
 Route::get('/tablas/usuarios/eliminar/{usuario?}' , 'UsuariosController@eliminarUsuario')->name('tablas.usuario.eliminar');
+//estaciones
 Route::post('/tablas/estacion/guardar' , 'EstacionesController@guardarEstacion')->name('tablas.estacion.guardar');
 Route::get('/tablas/estacion/eliminar/{terminal?}' , 'EstacionesController@eliminarEstacion')->name('tablas.estacion.eliminar');
+//cemtros emisores
+Route::post('/tablas/emisores/guardar' , 'CentrosEmisoresController@guardarCentroEmisor')->name('tablas.emisores.guardar');
+Route::get('/tablas/emisores/eliminar/{emisor?}' , 'CentrosEmisoresController@eliminarCentroEmisor')->name('tablas.emisores.eliminar');
+Route::post('/tablas/emisores/numeracion/{id?}' , 'CentrosEmisoresController@getNumeracion')->name('tablas.emisores.numeracion');
+Route::post('/tablas/emisores/{id?}' , 'CentrosEmisoresController@getCentroEmisor')->name('tablas.emisores.buscar');
+
+//Numeracion
+Route::post('/tablas/emisores/{emisor?}/{tipcom?}' , 'CentrosEmisoresController@getNum')->name('emisores.numeradores');
+//predeterminados
+Route::post('/tablas/predet/guardar' , 'PredeterminadosController@guardarPre')->name('tablas.predet.guardar');
+Route::post('/tablas/predet/{id?}' , 'PredeterminadosController@getPre')->name('tablas.predet.buscar');
+
+//Precios
+Route::get('/precios/' , 'PreciosController@preciosIndex')->name('precios');
+//Reportes
+Route::post('/tablas/emisores/reportes' , 'ReportesController@getReportes')->name('tablas.emisores.reportes');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/reportes/{id?}/{valor?}', 'ReportesController@reportes')->name('reportes');

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use App\ArticulosTipoBarra;
 use App\ArticulosMultiCod;
 use App\StockDetalle;
@@ -306,11 +307,26 @@ class Articulos extends Model{
                 }
                 //si no lo busco por nombre y retorno un div con muestra
             }if($art == null){
-                $art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artdesc', 'like' , '%'.$id .'%')->get();
+                //$art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artdesc', 'like' , '%'.$id .'%')->get();
+                $art = ArticulosMultiCod::join('mgart', 'mgart.artcod', '=' , 'mgartcodbar.codart')
+                                                    ->join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')
+                                                    ->where('mgart.artdesc', 'like' , '%'.$id .'%')
+                                                    ->orWhere('mgartcodbar.coddescalt', 'like','%'.$id.'%')
+                                                    ->get();
                 if($art != null){
                     return $art;
                 }
-            }
+            }if($art == null){
+                $art = ArticulosMultiCod::join('mgart', 'mgart.artcod', '=' , 'mgartcodbar.codart')
+                                                    ->join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')
+                                                    ->where('mgartcodbar.coddescalt', 'like','%'.$id.'%')
+                                                    ->get();
+                if($art != null){
+                    return $art;
+                }
+
+        }
+
         }catch(\Exception $e){
             return redirect()->route('articulos.modificar',$id)->with([
                 'messageerror' => 'Error al recuperar el artículo: ' .$e->getMessage() .' Se anulo la transacción'
@@ -319,14 +335,14 @@ class Articulos extends Model{
         return $art;
     }
 
-    static public function controlNegativos($articulo, $tipoMovimiento,$cantidad,$fecha){
+    static public function controlNegativos($articulo, $tipoMovimiento,$cantidad,$fecha,$deposito){
         try{
-            $articulo = Articulos::find($articulo);
+            $articulo = Articulos::getArticulo($articulo);
             $validador = $articulo->artcontrolstk;
             $resultado = null;
             $saldofinal = null;
             if($validador == 1){
-                $saldo = StockDetalle::detalleArtStock($articulo->artcod,$fecha);
+                $saldo = StockDetalle::detalleArtStock($articulo->artcod,$fecha,$deposito);
 
                 if($saldo == null){
                     $saldofinal = 0;
@@ -336,12 +352,13 @@ class Articulos extends Model{
                 $tipoMovimiento = TiposMovimSt::getTipoMov($tipoMovimiento);
                 if($tipoMovimiento->movtipmov == 2){
                     $resultado = $saldofinal - $cantidad;
-                }else{
+                }elseif($tipoMovimiento->movtipmov == 1){
                     $resultado = $saldofinal + $cantidad;
+                }elseif($tipoMovimiento->movtipmov == 3){
+                    $resultado = $saldofinal - $cantidad;
                 }
-
                 if($resultado < 0){
-                    return response()->json(['error' => 'Error. El artículo tiene control negativo y lo esta sobrepasando.  Cantidad: ' . $resultado .' '.$saldo], 200);
+                    return response()->json(['error' => 'Error. El artículo tiene control negativo y lo esta sobrepasando.  Cantidad: ' . $resultado ], 200);
                 }else{
                     return response()->json(['success' => 'Nada para hacer'], 200);
                 }
@@ -352,5 +369,28 @@ class Articulos extends Model{
         }catch(\Exception $e){
             return response()->json(['error'=>'Error: ' . $e]);
         }
+    }
+
+    public static function artPrecios(){
+/*         $listado = DB::select('select idart, artdes, codbar ,cant
+        from(
+        select a.artcod as idart, a.artdesc as artdes, a.artcodbarun as codbar, m.tmdesc as cant
+        from managementerp.mgart as a
+        inner join managementerp.mgarttipmed m
+        where a.artunmed = m.tmid
+        UNION ALL
+        select c.codart as idart, c.coddescalt as artdes, c.codcod as codbar, c.codcant as cant
+        from managementerp.mgartcodbar as c
+        )articulos'); */
+
+        $listado = DB::select('	select idart, artdes, codbar ,cant
+            from(
+            select a.artcod as idart, a.artdesc as artdes, a.artcodbarun as codbar, m.tmdesc as cant
+            from managementerp.mgart as a
+            inner join managementerp.mgarttipmed m
+            where a.artunmed = m.tmid )
+            articulos');
+
+return $listado;
     }
 }

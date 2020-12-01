@@ -18,8 +18,7 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="{{asset('css/table.css')}}">
         <link rel="stylesheet" href="{{asset('css/custom.css')}}">
-        <link href="{{ asset('js/handsontable/dist/handsontable.full.min.css')}}" rel="stylesheet" media="screen">
-        <script src="{{ asset('js/handsontable/dist/handsontable.full.min.js')}}" ></script>
+        <link rel="stylesheet" href="{{asset('bootstrap-select/dist/css/bootstrap-select.min.css')}}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
    </head>
@@ -104,107 +103,29 @@
         <script src="https://kit.fontawesome.com/3211b460a4.js" crossorigin="anonymous" async="async" type="text/javascript"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+{{--         <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="{{asset("bootstrap-select/dist/js/bootstrap-select.min.js")}}" async="async" type="text/javascript"></script>
+        <script type="text/javascript" src="{{asset('tabulator-master/dist/js/tabulator.min.js')}}" async="async"></script>
         <script src="{{ asset('js/localidad.js') }}" async="async" type="text/javascript"></script>
         <script src="{{ asset('js/listcli.js') }}" async="async" type="text/javascript"></script>
         <script src="{{ asset('js/bancos.js') }}" async="async" type="text/javascript"></script>
         <script src="{{ asset('js/cuentasbancarias.js') }}" async="async" type="text/javascript"></script>
         <script src="{{ asset('js/articulos.js')}}" async="async" type="text/javascript"></script>
-        @if($slug  ==  'movimientos_stockf')
-            <script src="{{ asset('js/movstkn.js')}}" async="async" type="text/javascript"></script>
-        @endif
-        <script type="text/javascript" src="{{asset('tabulator-master/dist/js/tabulator.min.js')}}"></script>
+        <script src="{{ asset('js/movstkn.js')}}" async="async" type="text/javascript"></script>
+        <script src="{{ asset('js/precios.js')}}" async="async" type="text/javascript"></script>
+        <script src="{{ asset('js/tablas.js')}}" async="async" type="text/javascript"></script>
 
 
      </body>
    </html>
 
    <script>
-    function controlempresa() {
-        $("#tablasempresa tr").mouseenter(function() {
-            $('#tablasempresa tr').css("background-color", "");
-            $(this).css("background-color", '#FFF3E0');
-            $("#tablasempresa tr").mouseleave(function() {
-                $('#tablasempresa tr').css("background-color", "");
-            });
-        });
-    }
 
-    $('#tablasempresa ').ready(function() {
-        controlempresa();
-    });
+        const datosTabla = @json(TiposC::getComprobantes());
+        const valores = @json(Funciones::getReportes());
+        const listadoor = @json(isset($listados) ? $listados : '');
 
-    $("#tablasempresa tr").click(function() {
-        var arrai = [];
-        largo = $("td").length;
-        largo = largo + 1;
-        console.log(largo);
-        for(var i=1; i < largo ; i++){
-            arrai.push($(this).find("td:nth-child("+i+")").text());
-        }
-
-        $('#empid').val(arrai[0]);
-        $('#empnom').val(arrai[1]);
-        $('#empcuit').val(arrai[2]);
-        $('#empdir').val(arrai[3]);
-        $('#emptel').val(arrai[4]);
-        $('#empmail').val(arrai[5]);
-      });
-
-      function controlsucursales() {
-        $("#tablassucursal tr").mouseenter(function() {
-            $('#tablassucursal tr').css("background-color", "");
-            $(this).css("background-color", '#FFF3E0');
-            $("#tablassucursal tr").mouseleave(function() {
-                $('#tablassucursal tr').css("background-color", "");
-            });
-        });
-    }
-
-    $('#tablassucursal ').ready(function() {
-        controlsucursales();
-    });
-
-    $("#tablassucursal tr").click(function() {
-        var arrai = [];
-        largo = $("td").length;
-        largo = largo + 1;
-        console.log(largo);
-        for(var i=1; i < largo ; i++){
-            arrai.push($(this).find("td:nth-child("+i+")").text());
-        }
-
-        $('#sucid').val(arrai[0]);
-        $('#sucnom').val(arrai[1]);
-        $('#sucabr').val(arrai[2]);
-
-      });
-
-      $("#tablasusuarios tr").click(function() {
-        var arrai = [];
-        largo = $("td").length;
-        largo = largo + 1;
-        for(var i=1; i < largo ; i++){
-            arrai.push($(this).find("td:nth-child("+i+")").text());
-        }
-
-        $('#userid').val(arrai[0]);
-        $('#user').val(arrai[1]);
-        $('#name').val(arrai[2]);
-        $('#email').val(arrai[4]);
-        if(arrai[3] == 'cliente'){
-            $('#role').val(3);
-        }
-        if(arrai[3] == 'user'){
-            $('#role').val(2);
-        }
-        if(arrai[3] == 'admin'){
-            $('#role').val(1);
-        }else{
-            $('#role').val('');
-        }
-      });
-
-
-</script>
+        </script>

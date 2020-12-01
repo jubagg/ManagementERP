@@ -8,7 +8,7 @@ class Ventascon extends Model
 {
 
     protected $table = 'mgcliconven';
-    protected $primarykey = 'cvid';
+    protected $primaryKey = 'cvid';
     public $timestamps = false;
 
     public function queryventas(){
