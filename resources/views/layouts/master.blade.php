@@ -119,6 +119,7 @@
         <script src="{{ asset('js/tablas.js')}}" async="async" type="text/javascript"></script>
 
 
+
      </body>
    </html>
 
@@ -127,5 +128,11 @@
         const datosTabla = @json(TiposC::getComprobantes());
         const valores = @json(Funciones::getReportes());
         const listadoor = @json(isset($listados) ? $listados : '');
+
+        const urlprlista = '{{route('precios.listas') }}';
+        const urlprart = '{{route('precios.articulos')}}';
+
+
+
 
         </script>

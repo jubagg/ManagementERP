@@ -3,5 +3,8 @@
         <i class="fas fa-dollar-sign mx-1"></i>
         Precios
     </a>
-
+    <a class="nav-link" id="precioslistas-tab" data-toggle="pill" href="#precioslistas" role="tab" aria-controls="precioslistas" aria-selected="true">
+        <i class="fas fa-dollar-sign mx-1"></i>
+        Precios por listas
+    </a>
 </div>

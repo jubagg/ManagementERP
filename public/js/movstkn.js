@@ -102,6 +102,7 @@ function autocomplete() {
             busqueda: buscador,
         },
         success: function($result) {
+            console.log($result);
             $result = JSON.parse($result);
             $.each($result, function(key, value) {
                 arrai.push({ label: value.coddescalt, value: value.codcod });

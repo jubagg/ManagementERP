@@ -16,6 +16,13 @@ ManagementERP es un software de gestión orientado a distintos rubros comerciale
 
 La idea es tener finalizado el software para 2021. Se esta trabajando sobre Laravel con Bootstrap, JQuery y AJAX. Para los reportes usamos phpjasper y para la electronica afipsdk.
 
+
+
+## Versionado 📌
+Actual: 1.3.97
+*[Pendding]0002/041220 = Reconfigurar la busqueda de articulo en el precio para que busque por listas y no solamente por el articulo en si.
+* [Bugfix] 0001/041220 = Bug en join, query busqueda articulos, se cambia por un right join para ejecutar la busqueda de todos los articulos. Ln:317. Model:Articulos.php
+
 <<<<<<< HEAD
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 

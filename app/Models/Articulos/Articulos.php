@@ -285,54 +285,71 @@ class Articulos extends Model{
             }
     }
 
-    public static function getArticulo($id){
-        try{
-            //miro si el articulo vino por el codigo dle articulo,
-            $art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artcod', '=' , $id)->first();
-            //si el articulo no viene por el id del mismo busco por el codigo de barra uniico, si tiene algo retorno
-            if($art == null){
-                $art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artcodbarun', '=' , $id)->first();
-                if($art != null){
-                    return $art;
-                }
-            //si no localiza por codigo de barra, busco por el codigo mutlicod y lo retorno si existe algo
-            }if($art == null){
-                $art = ArticulosMultiCod::join('mgart', 'mgart.artcod', '=' , 'mgartcodbar.codart')
-                                                        ->join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')
-                                                        ->where('mgartcodbar.codcod', '=',$id)
-                                                        ->first();
-                //$art = Articulos::find($art->codart);
-                if($art != null){
-                    return $art;
-                }
-                //si no lo busco por nombre y retorno un div con muestra
-            }if($art == null){
-                //$art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artdesc', 'like' , '%'.$id .'%')->get();
-                $art = ArticulosMultiCod::join('mgart', 'mgart.artcod', '=' , 'mgartcodbar.codart')
-                                                    ->join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')
-                                                    ->where('mgart.artdesc', 'like' , '%'.$id .'%')
-                                                    ->orWhere('mgartcodbar.coddescalt', 'like','%'.$id.'%')
-                                                    ->get();
-                if($art != null){
-                    return $art;
-                }
-            }if($art == null){
-                $art = ArticulosMultiCod::join('mgart', 'mgart.artcod', '=' , 'mgartcodbar.codart')
-                                                    ->join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')
-                                                    ->where('mgartcodbar.coddescalt', 'like','%'.$id.'%')
-                                                    ->get();
-                if($art != null){
-                    return $art;
-                }
+    public static function getArticulo($id, $contex = null){
 
-        }
+        switch($contex){
+            case 'precios':
+                    $articulo = DB::select(
+                        "select * from managementerp.mgart m
+                        inner join managementerp.mgartivacat m2
+                        on m.artiva = m2.icid
+                        inner join managementerp.mgprecios m3
+                        on m.artcod = m3.prart
+                        where m.artcod = $id
+                        and m.artinactive = false
+                        limit 1;"
+                    );
 
-        }catch(\Exception $e){
-            return redirect()->route('articulos.modificar',$id)->with([
-                'messageerror' => 'Error al recuperar el artículo: ' .$e->getMessage() .' Se anulo la transacción'
-            ]);
-        }
-        return $art;
+                    return $articulo;
+                break;
+            default:
+                try{
+                    //miro si el articulo vino por el codigo dle articulo,
+                    $art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artcod', '=' , $id)->first();
+                    //si el articulo no viene por el id del mismo busco por el codigo de barra uniico, si tiene algo retorno
+                    if($art == null){
+                        $art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artcodbarun', '=' , $id)->first();
+                        if($art != null){
+                            return $art;
+                        }
+                    //si no localiza por codigo de barra, busco por el codigo mutlicod y lo retorno si existe algo
+                    }if($art == null){
+                        $art = ArticulosMultiCod::join('mgart', 'mgart.artcod', '=' , 'mgartcodbar.codart')
+                                                                ->join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')
+                                                                ->where('mgartcodbar.codcod', '=',$id)
+                                                                ->first();
+                        //$art = Articulos::find($art->codart);
+                        if($art != null){
+                            return $art;
+                        }
+                        //si no lo busco por nombre y retorno un div con muestra
+                    }if($art == null){
+                        //$art = Articulos::join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')->where('mgart.artdesc', 'like' , '%'.$id .'%')->get();
+                        $art = ArticulosMultiCod::rightJoin('mgart', 'mgart.artcod', '=' , 'mgartcodbar.codart')
+                                                            ->rightJoin('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')
+                                                            ->where('mgart.artdesc', 'like' , '%'.$id .'%')
+                                                            ->orWhere('mgartcodbar.coddescalt', 'like','%'.$id.'%')
+                                                            ->get();
+                        if($art != null){
+                            return $art;
+                        }
+                    }if($art == null){
+                        $art = ArticulosMultiCod::join('mgart', 'mgart.artcod', '=' , 'mgartcodbar.codart')
+                                                            ->join('mgarttipmed','mgart.artunmed', '=','mgarttipmed.tmid')
+                                                            ->where('mgartcodbar.coddescalt', 'like','%'.$id.'%')
+                                                            ->get();
+                        if($art != null){
+                            return $art;
+                        }
+
+                }
+                return $art;
+                }catch(\Exception $e){
+                    return redirect()->route('articulos.modificar',$id)->with([
+                        'messageerror' => 'Error al recuperar el artículo: ' .$e->getMessage() .' Se anulo la transacción'
+                    ]);
+                }
+            }
     }
 
     static public function controlNegativos($articulo, $tipoMovimiento,$cantidad,$fecha,$deposito){
